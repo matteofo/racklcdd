@@ -55,6 +55,7 @@ Serial::Serial(std::string deviceName) : logger("racklcdd::Serial") {
         this->open(deviceName);
     } catch (std::runtime_error& e) {
         logger.error("{}", e.what());
+        std::terminate();
     }
 }
 
@@ -76,6 +77,6 @@ Serial::~Serial() {
     try {
         this->close();
     } catch (std::runtime_error& e) {
-        logger.error("{}", e.what());
+        logger.warn("{}", e.what());
     }
 }

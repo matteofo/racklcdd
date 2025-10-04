@@ -17,7 +17,7 @@ void SendableCmdReport::update() {
         throw std::runtime_error(std::format("Failed to run command {}!", this->command));
     }
 
-    static char buffer[128];
+    char buffer[128];
 
     while (std::fgets(buffer, 128, pipe.get()) != nullptr) {
         this->output += buffer;
@@ -36,6 +36,7 @@ json SendableCmdReport::jsonify() {
 void SendableCmdReport::send(Serial& serial) {
     logger.log("Sending output of command {} ({})", this->command, this->output);
 
-    static json j = this->jsonify();
+    json j = this->jsonify();
+    logger.log("{} {}", j.dump(), this->output);
     serial.write(j.dump());
 }

@@ -29,14 +29,13 @@ void SendableStorageReport::update() {
             const char* u = common_get_mem_unit(&cap);
             logger.log("{}{}{}", point.c_str(), cap, u);
         } catch (const fs::filesystem_error& e) {
-            logger.error("{}", e.what());
+            logger.warn("{}", e.what());
         }
     }
 }
 
 json SendableStorageReport::jsonify() {
-    return nullptr;
-    static json j;
+    json j;
 
     j["type"] = 3;
     j["percent"] = this->report.percent;
@@ -49,7 +48,6 @@ json SendableStorageReport::jsonify() {
 }
 
 void SendableStorageReport::send(Serial& serial) {
-    return;
     logger.log("Sending Storage report ({}{} of {}{}, {}%)",
         this->report.used, this->report.unitUsed,
         this->report.total, this->report.unitTot,
@@ -57,7 +55,7 @@ void SendableStorageReport::send(Serial& serial) {
     );
 
     static json j = this->jsonify();
-   // serial.write(j.dump());
+    serial.write(j.dump());
 }
 
 SendableStorageReport::SendableStorageReport() : logger("racklcdd::SendableStorageReport") {}

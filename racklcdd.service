@@ -1,0 +1,8 @@
+[Unit]
+Description=RackLCD daemon
+
+[Service]
+ExecStart=env HOME=/root /root/.local/bin/racklcdd
+
+[Install]
+WantedBy=default.target

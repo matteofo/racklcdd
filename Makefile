@@ -1,6 +1,6 @@
 SOURCES := src/*.cpp src/data/*.cpp src/data/*.c
 
-CFLAGS := -Isrc/ -Isrc/data/
+CFLAGS :=  -static -static-libgcc -static-libstdc++ -Isrc/ -Isrc/data/
 LFLAGS := -lboost_system -lboost_thread -g
 
 STD_VER := c++23

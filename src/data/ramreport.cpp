@@ -1,7 +1,7 @@
 #include "ramreport.hpp"
 
 void SendableRAMReport::update() {
-    static struct sysinfo info;
+    struct sysinfo info;
     if (sysinfo(&info) != 0) {
         throw std::runtime_error("sysinfo failed!");
     }
@@ -16,7 +16,7 @@ void SendableRAMReport::update() {
 }
 
 json SendableRAMReport::jsonify() {
-    static json j;
+    json j;
 
     j["type"] = 1;
     j["percent"] = this->report.percent;
@@ -35,7 +35,7 @@ void SendableRAMReport::send(Serial& serial) {
         this->report.percent
     );
 
-    static json j = this->jsonify();
+    json j = this->jsonify();
     serial.write(j.dump());
 }
 

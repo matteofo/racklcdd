@@ -13,6 +13,7 @@
 #include "data/cpureport.hpp"
 #include "data/ramreport.hpp"
 #include "data/storagereport.hpp"
+#include "data/cmdreport.hpp"
 
 int main() {
     Logger logger("racklcdd");
@@ -24,7 +25,8 @@ int main() {
     ISendable* modes[] = {
         new SendableCPUReport(),
         new SendableRAMReport(),
-        new SendableStorageReport()
+        //new SendableStorageReport()
+        new SendableCmdReport("uname -s -r")
     };
 
     //daemon(1, 1);

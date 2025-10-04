@@ -26,7 +26,8 @@ int main() {
         new SendableCPUReport(),
         new SendableRAMReport(),
         //new SendableStorageReport()
-        new SendableCmdReport("uname -s -r")
+        new SendableCmdReport("uname -s -r"),
+        new SendableCmdReport("hostname -i | awk '{print $1}'")
     };
 
     //daemon(1, 1);

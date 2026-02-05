@@ -1,42 +1,24 @@
 #include "cmdreport.hpp"
 
-void SendableCmdReport::setCommand(const std::string command) {
-    this->command = command;
+CmdReport::CmdReport(const std::string command) : logger("racklcdd::CmdReport"), command(command) {
 }
 
-SendableCmdReport::SendableCmdReport(const std::string command) : logger("racklcdd::SendableCmdReport") {
-    this->setCommand(command);
+void CmdReport::update() {
+    this->command.run();
 }
 
-void SendableCmdReport::update() {
-    this->output.clear();
-
-    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(this->command.c_str(), "r"), pclose);
-
-    if (!pipe) {
-        throw std::runtime_error(std::format("Failed to run command {}!", this->command));
-    }
-
-    char buffer[128];
-
-    while (std::fgets(buffer, 128, pipe.get()) != nullptr) {
-        this->output += buffer;
-    }
-}
-
-json SendableCmdReport::jsonify() {
+json CmdReport::jsonify() {
     json j;
 
     j["type"] = 3;
-    j["str"] = this->output;
+    j["str"] = this->command.getOutput();
 
     return j;
 }
 
-void SendableCmdReport::send(Serial& serial) {
-    logger.log("Sending output of command {} ({})", this->command, this->output);
+void CmdReport::send(Serial& serial) {
+    logger.log("Sending output of command {} ({})", this->command.get(), this->command.getOutput());
 
     json j = this->jsonify();
-    logger.log("{} {}", j.dump(), this->output);
     serial.write(j.dump());
 }

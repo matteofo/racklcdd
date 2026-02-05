@@ -1,11 +1,11 @@
 #pragma once
-#include <sys/sysinfo.h>
 #include "sendable.hpp"
+#include "command.hpp"
 #include "common.h"
-#include "logger.hpp"
 
-class RAMReport: public ISendable {
+class PVERamReport: public ISendable {
 private:
+    Command command;
     MemUsageReport report;
     Logger logger;
 public:
@@ -13,5 +13,5 @@ public:
     json jsonify();
     void send(Serial& serial);
 
-    RAMReport();
+    PVERamReport();
 };

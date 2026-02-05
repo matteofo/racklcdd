@@ -38,7 +38,7 @@ const std::set<std::string> EXCLUDED_FS_TYPES = {
     "fusectl"
 };
 
-class SendableStorageReport: public ISendable {
+class StorageReport: public ISendable {
 private:
     MemUsageReport report;
     Logger logger;
@@ -47,5 +47,5 @@ public:
     json jsonify();
     void send(Serial& serial);
 
-    SendableStorageReport();
+    StorageReport();
 };

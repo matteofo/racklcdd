@@ -1,6 +1,6 @@
 #include "cpureport.hpp"
 
-void SendableCPUReport::update() {
+void CPUReport::update() {
     //this->report.cores = get_nprocs();
     this->report.cores = boost::thread::physical_concurrency();
 
@@ -10,7 +10,7 @@ void SendableCPUReport::update() {
     this->report.percent = (int) *loads;
 }
 
-json SendableCPUReport::jsonify() {
+json CPUReport::jsonify() {
     json j;
 
     j["type"] = 0;
@@ -20,11 +20,11 @@ json SendableCPUReport::jsonify() {
     return j;
 }
 
-void SendableCPUReport::send(Serial& serial) {
+void CPUReport::send(Serial& serial) {
     logger.log("Sending CPU report ({}%, {} cores)", this->report.percent, this->report.cores);
 
     json j = this->jsonify();
     serial.write(j.dump());
 }
 
-SendableCPUReport::SendableCPUReport() : logger("racklcdd::SendableCPUReport") {}
+CPUReport::CPUReport() : logger("racklcdd::CPUReport") {}

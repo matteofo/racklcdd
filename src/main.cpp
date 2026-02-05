@@ -14,7 +14,10 @@
 #include "data/ramreport.hpp"
 #include "data/storagereport.hpp"
 #include "data/cmdreport.hpp"
+#include "data/pve/pvestorage.hpp"
+#include "data/pve/pveram.hpp"
 
+#ifndef RACKLCD_TESTING
 int main() {
     Logger logger("racklcdd");
     logger.log("Starting up...");
@@ -23,11 +26,11 @@ int main() {
     Serial serial(conf.getDevice());
 
     ISendable* modes[] = {
-        new SendableCPUReport(),
-        new SendableRAMReport(),
-        //new SendableStorageReport()
-        new SendableCmdReport("uname -s -r"),
-        new SendableCmdReport("hostname -i | awk '{print $1}'")
+        new CPUReport(),
+        new PVERamReport(),
+        new PVEStorageReport(),
+        new CmdReport("uname -s -r"),
+        new CmdReport("hostname -i | awk '{print $1}'")
     };
 
     //daemon(1, 1);
@@ -46,3 +49,4 @@ int main() {
 
     return 0;
 }
+#endif

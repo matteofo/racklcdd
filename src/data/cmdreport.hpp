@@ -1,15 +1,14 @@
 #include "sendable.hpp"
+#include "command.hpp"
 
-class SendableCmdReport: public ISendable {
+class CmdReport: public ISendable {
 private:
-    std::string command;
-    std::string output;
+    Command command;
     Logger logger;
 public:
     void update();
     json jsonify();
     void send(Serial& serial);
 
-    void setCommand(const std::string command); 
-    SendableCmdReport(const std::string command);
+    CmdReport(const std::string command);
 };

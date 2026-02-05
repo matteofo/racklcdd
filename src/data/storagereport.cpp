@@ -1,6 +1,6 @@
 #include "storagereport.hpp"
 
-void SendableStorageReport::update() {
+void StorageReport::update() {
     std::vector<fs::path> mountPoints;
     std::ifstream procMounts("/proc/mounts");
     
@@ -34,7 +34,7 @@ void SendableStorageReport::update() {
     }
 }
 
-json SendableStorageReport::jsonify() {
+json StorageReport::jsonify() {
     json j;
 
     j["type"] = 3;
@@ -47,7 +47,7 @@ json SendableStorageReport::jsonify() {
     return j;
 }
 
-void SendableStorageReport::send(Serial& serial) {
+void StorageReport::send(Serial& serial) {
     logger.log("Sending Storage report ({}{} of {}{}, {}%)",
         this->report.used, this->report.unitUsed,
         this->report.total, this->report.unitTot,
@@ -58,4 +58,4 @@ void SendableStorageReport::send(Serial& serial) {
     serial.write(j.dump());
 }
 
-SendableStorageReport::SendableStorageReport() : logger("racklcdd::SendableStorageReport") {}
+StorageReport::StorageReport() : logger("racklcdd::StorageReport") {}

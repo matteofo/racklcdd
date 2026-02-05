@@ -5,7 +5,7 @@
 #include "common.h"
 #include "logger.hpp"
 
-class SendableCPUReport: public ISendable {
+class CPUReport: public ISendable {
 private:
     CPUUsageReport report;
     Logger logger;
@@ -14,5 +14,5 @@ public:
     json jsonify();
     void send(Serial& serial);
 
-    SendableCPUReport();
+    CPUReport();
 };

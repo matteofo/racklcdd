@@ -1,6 +1,6 @@
 #include "ramreport.hpp"
 
-void SendableRAMReport::update() {
+void RAMReport::update() {
     struct sysinfo info;
     if (sysinfo(&info) != 0) {
         throw std::runtime_error("sysinfo failed!");
@@ -15,7 +15,7 @@ void SendableRAMReport::update() {
     this->report.percent = ((double)this->report.used / (double)this->report.total) * 100;
 }
 
-json SendableRAMReport::jsonify() {
+json RAMReport::jsonify() {
     json j;
 
     j["type"] = 1;
@@ -28,7 +28,7 @@ json SendableRAMReport::jsonify() {
     return j;
 }
 
-void SendableRAMReport::send(Serial& serial) {
+void RAMReport::send(Serial& serial) {
     logger.log("Sending RAM report ({}{} of {}{}, {}%)",
         this->report.used, this->report.unitUsed,
         this->report.total, this->report.unitTot,
@@ -39,4 +39,4 @@ void SendableRAMReport::send(Serial& serial) {
     serial.write(j.dump());
 }
 
-SendableRAMReport::SendableRAMReport() : logger("racklcdd::SendableRAMReport") {}
+RAMReport::RAMReport() : logger("racklcdd::RAMReport") {}

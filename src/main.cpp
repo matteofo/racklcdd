@@ -14,6 +14,7 @@
 #include "data/ramreport.hpp"
 #include "data/storagereport.hpp"
 #include "data/cmdreport.hpp"
+#include "data/cputemp.hpp"
 #include "data/pve/pvestorage.hpp"
 #include "data/pve/pveram.hpp"
 
@@ -27,6 +28,7 @@ int main() {
 
     ISendable* modes[] = {
         new CPUReport(),
+        new CPUTemperatureReport(),
         new PVERamReport(),
         new PVEStorageReport(),
         new CmdReport("uname -s -r"),

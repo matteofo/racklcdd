@@ -1,10 +1,10 @@
 #include "common.h"
 
 const char* common_get_mem_unit(unsigned long long* mem) {
-    static const char* MEM_UNITS[] = {"B", "K", "M", "G", "T", "P"};
+    static const char* MEM_UNITS[] = {"B", "K", "M", "G", "T", "P", "?"};
 
-    if (mem == 0) { return "?"; }
-    if (*mem > 1e+15) { return "?"; } // check if we're past the PB mark
+    if (mem == 0) { return MEM_UNITS[0]; }
+    if (*mem > 1e+15) { return MEM_UNITS[6]; } // check if we're past the PB mark
 
     int i = 0;
 
